@@ -1,0 +1,22 @@
+{
+    "name": "Python3.9",
+
+    "dockerComposeFile": [
+        "../docker-compose.yml"
+    ],
+
+    "service": "python3.9",
+
+    "workspaceFolder": "/root/",
+
+    "settings": { 
+        "terminal.integrated.shell.linux": null
+    },
+
+    "extensions": [
+        "ms-ceintl.vscode-language-pack-ja",
+        "ms-python.python",
+        "oderwat.indent-rainbow",
+        "almenon.arepl"
+    ]
+}
