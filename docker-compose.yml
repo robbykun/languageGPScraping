@@ -8,3 +8,12 @@ services:
       - .:/root/
     working_dir: /root/
     tty: true
+    #コマンドネットワーク作成$docker network create shared-network
+    networks:
+      - default
+      - shared-network
+
+    
+networks:
+  shared-network:
+    external: true
