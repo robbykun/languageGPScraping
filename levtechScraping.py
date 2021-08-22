@@ -63,6 +63,9 @@ def get_project_detail(link):
             print(project.project_no)
         else:
             project.price = int((unit_price.text.replace('円', '')).replace(',', ''))
+            # 時間単価除外
+            if project.price < 300_000:
+                return None
 
         # 最寄り駅
         for station in soup.find_all('p', {'class': 'pjtSummary__row__desc'}):
@@ -81,7 +84,7 @@ def get_project_detail(link):
 # メインの処理
 #--------------------------------
 
-# Projects table and languages table record all delete.
+Projects table and languages table record all delete.
 response = requests.delete(URL_REST_API)
 if response.status_code != 200 :
     print(str(response.status_code) + ' : Table all record delete error.')
@@ -110,7 +113,8 @@ while len(levtech_url) > 0 :
 
         # 詳細情報が取得できた順に格納
         for future in concurrent.futures.as_completed(futures):
-            project_list.projects.append(future.result())
+            if future.result() is not None:
+                project_list.projects.append(future.result())
 
     # print(project_list.to_json(ensure_ascii=False))
 
