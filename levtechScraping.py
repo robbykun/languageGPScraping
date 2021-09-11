@@ -90,8 +90,13 @@ if response.status_code != 200 :
     print(str(response.status_code) + ' : Table all record delete error.')
     sys.exit(1)
 
+count = 0
+
 # 「Next」リンクが有効なら続行
 while len(levtech_url) > 0 :
+
+    count += 1
+
     # 時間計測（１ページ当たり　START）
     start = time.time()
 
@@ -131,3 +136,8 @@ while len(levtech_url) > 0 :
     # 時間計測（１ページ当たり　END）
     elapsed_time = time.time() - start
     print ("elapsed_time:{0}".format(elapsed_time) + "[sec]")
+
+    # 大量のリクエストを送らないように制御（3ページ処理後、5分スリープ）
+    if count == 3 :
+        count = 0
+        time.sleep(300)
