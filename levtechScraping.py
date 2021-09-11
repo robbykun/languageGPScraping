@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 DELIMITER = '###'
 
-MAX_PROC = 3
+MAX_PROC = 15
 
 URL_REST_API = 'http://go:8080/project'
 
@@ -70,7 +70,7 @@ def get_project_detail(link):
         # 最寄り駅
         for station in soup.find_all('p', {'class': 'pjtSummary__row__desc'}):
             if str(station.text).endswith("（東京都）"):
-                project.station =  station.text
+                project.station =  station.text.replace('（東京都）', '')
 
         # プログラミング言語
         lang_tsv = ''
@@ -84,7 +84,7 @@ def get_project_detail(link):
 # メインの処理
 #--------------------------------
 
-Projects table and languages table record all delete.
+# Projects table and languages table record all delete.
 response = requests.delete(URL_REST_API)
 if response.status_code != 200 :
     print(str(response.status_code) + ' : Table all record delete error.')
